@@ -14,3 +14,6 @@ git remote -v - visar länkar(fetch,push)
 Måste lägga till "start": "node server/server.js" i package.json.
 I server.js, port ska ändras till dynamiskt värde.
 need to teach Heruko to run webpack :"heroku-postbuild": "yarn run build:prod"
+git push
+git push heroku master
+heroku open - öppnar sidan
