@@ -10,7 +10,7 @@ import database from '../firebase/firebase';
 //component dispatches function (?)
 //function runs (has the ability to dispatch other actions and do whatever it wants)
 
-//ADD_EXPENSE
+// ADD_EXPENSE
 export const addExpense = (expense) => ({
   type: 'ADD_EXPENSE',
   expense
@@ -35,7 +35,7 @@ export const startAddExpense = (expenseData = {}) => {
   };
 };
 
-//REMOVE_EXPENSE
+// REMOVE_EXPENSE
 export const removeExpense = ({ id } = {}) => ({
   type: 'REMOVE_EXPENSE',
   id
@@ -48,3 +48,25 @@ export const editExpense = (id, updates) => ({
   id,
   updates
 });
+
+// SET_EXPENSES
+export const setExpenses = (expenses) => ({
+  type: 'SET_EXPENSES',
+  expenses
+});
+
+export const startSetExpenses = () => {
+  return (dispatch) => {
+    return database.ref('Expenses').once('value').then((snapshot) => {
+      const expenses = [];
+
+      snapshot.forEach((childSnapshot) => {
+        expenses.push({
+          id: childSnapshot.key,
+          ...childSnapshot.val()
+        });
+      });
+      dispatch(setExpenses(expenses));
+    });
+  };
+};
